@@ -7,23 +7,26 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            background-color: #000;
+            color: #0f0;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: column;
         }
         .container {
-            background-color: #fff;
+            background-color: rgba(0, 0, 0, 0.8);
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px #0f0;
             text-align: center;
+            max-width: 600px;
         }
         h1 {
-            color: #333;
+            color: #0f0;
         }
         form {
             margin-top: 20px;
@@ -31,7 +34,9 @@
         input[type="text"] {
             width: calc(100% - 22px);
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #0f0;
+            background: black;
+            color: #0f0;
             border-radius: 4px;
             margin-bottom: 10px;
         }
@@ -39,39 +44,69 @@
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
-            background-color: #28a745;
-            color: white;
+            background-color: #0f0;
+            color: black;
             cursor: pointer;
+            margin-top: 10px;
         }
         button:hover {
-            background-color: #218838;
+            background-color: #0a0;
         }
         pre {
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
+            background-color: black;
+            border: 1px solid #0f0;
             padding: 15px;
             border-radius: 4px;
             margin-top: 20px;
             text-align: left;
             white-space: pre-wrap;
             word-wrap: break-word;
+            color: #0f0;
+        }
+        .help {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #0f0;
+            margin-top: 20px;
+            text-align: left;
+            max-width: 600px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>BashCrawl Game</h1>
+        <h1>BashCrawl</h1>
+        <button onclick="toggleHelp()">Show Help / Hide Help</button>
+        <div id="help" class="help">
+            <p>Welcome!</p>
+
+<p>This is a game to teach you the basics of using a POSIX (Linux, BSD, UNIX) terminal.</p>
+<p>Enter a Bash command in the input field and press "Run Command" to execute it.</p>
+            <p>Example: <code>ls</code>, <code>pwd</code>, <code>whoami</code></p>
+<p>Type the letters "cd " (just the letters, not the quotes) into the terminal...</p>
+<p>Your first move is very important.</p>
+<p>Type this into your terminal:</p>
+<code>cat scroll</code>
+<p>You are now playing the game.</p>
+<p>May the gods save you.</p>            
+        </div>
         <form id="command-form">
             <input type="text" id="command" name="command" placeholder="Enter bash command">
             <button type="submit">Run Command</button>
         </form>
         <pre id="output">Output will be displayed here...</pre>
     </div>
-
     <script>
+        function toggleHelp() {
+            const helpDiv = document.getElementById('help');
+            helpDiv.style.display = helpDiv.style.display === 'none' ? 'block' : 'none';
+        }
         document.getElementById('command-form').addEventListener('submit', function(event) {
             event.preventDefault();
-            const command = document.getElementById('command').value;
+            const commandInput = document.getElementById('command');
+            const command = commandInput.value;
             fetch('/run_command', {
                 method: 'POST',
                 headers: {
@@ -82,6 +117,7 @@
             .then(response => response.json())
             .then(data => {
                 document.getElementById('output').textContent = data.output || data.error;
+                commandInput.value = ""; // Очистка поля ввода после выполнения команды
             });
         });
     </script>

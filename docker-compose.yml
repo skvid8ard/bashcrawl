@@ -5,8 +5,4 @@ services:
     ports:
       - "80:80"
       - "22:22"
-#    volumes:
-#      - ./bashcrawl:/var/www/html/bashcrawl
-#      - ./app.py:/var/www/html/app.py
-#      - ./nginx.conf:/etc/nginx/nginx.conf
-#      - ./index.html:/var/www/html/index.html
+

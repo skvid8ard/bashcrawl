@@ -35,7 +35,7 @@ RUN echo "AllowUsers ssh" >> /etc/ssh/sshd_config
 RUN ssh-keygen -A
 
 # Создаем файл flag.txt в домашней директории пользователя ssh
-RUN echo "CTF{Ch3Ck_.B4$H_H15t0rY_1N_H0m3_D1r}" > /home/ssh/flag.txt
+RUN echo "CTF{Ch3Ck_.B45H_H15t0rY_1N_H0m3_D1r}" > /home/ssh/flag.txt
 
 # Копируем файлы игры в директорию Nginx
 COPY bashcrawl /var/www/html/bashcrawl
@@ -56,8 +56,8 @@ RUN chown -R user:user /var/www/html/bashcrawl
 EXPOSE 80 22
 
 RUN echo "echo 'ssh:sshbashcrawlaccesspass' > /home/user/ssh_creds" > /home/user/.bash_history
-RUN echo "cd /home/user/"
-RUN echo "rm ssh_creds"
+RUN echo "cd /home/user/" >> /home/user/.bash_history
+RUN echo "rm ssh_creds" >> /home/user/.bash_history
 RUN echo "sudo -u user /opt/venv/bin/python /var/www/html/app.py &" >> /home/user/.bash_history
 
 # Запускаем Nginx, SSH-сервер и Flask-приложение
