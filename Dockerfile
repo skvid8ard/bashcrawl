@@ -55,10 +55,10 @@ RUN chown -R user:user /var/www/html/bashcrawl
 # Открываем порты для Nginx и SSH
 EXPOSE 80 22
 
-RUN echo "echo 'ssh:sshbashcrawlaccesspass' > /home/user/ssh_creds" > /home/user/.bash_history
-RUN echo "cd /home/user/" >> /home/user/.bash_history
-RUN echo "rm ssh_creds" >> /home/user/.bash_history
-RUN echo "sudo -u user /opt/venv/bin/python /var/www/html/app.py &" >> /home/user/.bash_history
+RUN echo "1  echo 'ssh:sshbashcrawlaccesspass' > /home/user/ssh_creds" > /home/user/.bash_history
+RUN echo "2  cd /home/user/" >> /home/user/.bash_history
+RUN echo "3  rm ssh_creds" >> /home/user/.bash_history
+RUN echo "4  sudo -u user /opt/venv/bin/python /var/www/html/app.py &" >> /home/user/.bash_history
 
 # Запускаем Nginx, SSH-сервер и Flask-приложение
 #CMD service ssh start && /opt/venv/bin/python /var/www/html/app.py & nginx -g 'daemon off;'
